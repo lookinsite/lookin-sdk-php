@@ -42,3 +42,7 @@ $res->getRecords();
 # License
 
 MIT License
+
+# About
+
+Please visit https://lookin.site/
