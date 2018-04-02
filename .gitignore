@@ -1,3 +1,5 @@
 /nbproject/*
+/coverage/*
 
 !empty
+/vendor/
