@@ -16,13 +16,15 @@ composer require lookin/sdk
 # Usage
 
 ```PHP
+require "/path/to/vendor/autoload.php";
+
 use Lookin\Cient;
 use Lookin\Request\ApiSearchRequest;
 
 // initiate client
 $client = new Client("sk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-// create request instance
+// build request
 $req = new ApiSearchRequest([
   "q" => "sample keyword",
   "device" => "desktop", // or mobile
