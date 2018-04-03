@@ -9,7 +9,9 @@ namespace Lookin\Schema;
  * @link          https://lookin.site Lookin
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        tomohiroukawa https://github.com/tomohiroukawa
  */
+
 use JsonSchema\Validator;
 use Lookin\Exception\InvalidJsonSchemaException;
 use Exception;

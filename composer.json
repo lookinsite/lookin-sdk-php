@@ -1,5 +1,5 @@
 {
-    "name": "tomohiroukawa/lookin-php-sdk",
+    "name": "tomohiroukawa/lookin-sdk-php",
     "description": "Lookin search SDK for PHP",
     "type": "composer-plugin",
     "license": "The MIT License",

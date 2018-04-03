@@ -9,13 +9,15 @@ namespace Lookin\Exception;
  * @link          https://lookin.site Lookin
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        tomohiroukawa https://github.com/tomohiroukawa
  */
+
 use Exception;
 
 /**
- * Secret key not specified exception
+ * Invalid secret key not specified exception
  */
-class SecretKeyNotSpecifiedException extends Exception
+class InvalidSecretKeyException extends Exception
 {
 
     /**

@@ -2,9 +2,19 @@
 
 namespace Lookin;
 
+/**
+ * Lookin
+ *
+ * @copyright     Copyright (c) Instoll. inc
+ * @link          https://lookin.site Lookin
+ * @since         1.0.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        tomohiroukawa https://github.com/tomohiroukawa
+ */
+
 use Lookin\Exception\HttpErrorException;
 use Lookin\Exception\InvalidRequestException;
-use Lookin\Exception\SecretKeyNotSpecifiedException;
+use Lookin\Exception\InvalidSecretKeyException;
 use Lookin\Response\ApiSearchResponse;
 
 class Client
@@ -46,10 +56,20 @@ class Client
         }
 
         if (!$secretKey) {
-            throw new SecretKeyNotSpecifiedException('secret key not specified');
+            throw new InvalidSecretKeyException('secret key not specified');
+        }
+
+        if (!preg_match("/^sk_([0-9a-zA-Z]{40})$/", $secretKey)) {
+            // check secret key format
+            throw new InvalidSecretKeyException('secret key is invalid');
         }
 
         $this->secretKey = $secretKey;
+
+        if (getenv('LOOKIN_SEARCH_ENDPOINT')) {
+            // override endpoint with environment variable
+            $this->endpoint = getenv('LOOKIN_SEARCH_ENDPOINT');
+        }
     }
 
     /**
@@ -84,7 +104,7 @@ class Client
      * @param string $url URL
      * @param array $params array of request parameters
      */
-    private function __sendGET($url, $params = array())
+    private function __sendGET($url, $params = [])
     {
         if (getenv('ENV') === 'TEST') {
             // when testing
