@@ -5,7 +5,6 @@ namespace Lookin;
 use Lookin\Exception\HttpErrorException;
 use Lookin\Exception\InvalidRequestException;
 use Lookin\Exception\SecretKeyNotSpecifiedException;
-use Lookin\Request\ApiSearchRequest;
 use Lookin\Response\ApiSearchResponse;
 
 class Client
