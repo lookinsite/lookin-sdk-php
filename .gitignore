@@ -1,0 +1,6 @@
+/nbproject/*
+/coverage/*
+.DS_Store
+
+!empty
+/vendor/
