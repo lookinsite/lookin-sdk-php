@@ -65,12 +65,13 @@ class Client
             throw new InvalidRequestException('request must be an instance of \Lookin\Request\ApiSearchRequest');
         }
 
-        // send search request
-        $url = $this->endpoint . 'search';
-        $response = $this->__sendGET($url, $request->getRequest());
-
-        if ($response->getStatusCode() >= 400) {
-            throw new HttpErrorException(sprintf('http error occurred because of "%s %s"', $response->getStatusCode(), $response->getReasonPhrase()), $response->getStatusCode());
+        try {
+            // send search request
+            $url = $this->endpoint . 'search';
+            $response = $this->__sendGET($url, $request->getRequest());
+        } catch (\Exception $ex) {
+            // wrap guzzle's exception
+            throw new HttpErrorException($ex->getMessage(), $ex->getCode());
         }
 
         // create response instance

@@ -13,8 +13,6 @@ use Lookin\Client;
 class ClientTest extends TestCase
 {
 
-    private $client;
-
     /**
      * setUp method
      *
@@ -82,7 +80,7 @@ class ClientTest extends TestCase
     /**
      * search 異常系
      *
-     * @expectedException \GuzzleHttp\Exception\ClientException
+     * @expectedException \Lookin\Exception\HttpErrorException
      * @expectedExceptionCode 400
      */
     public function testSearchEndWith400()
