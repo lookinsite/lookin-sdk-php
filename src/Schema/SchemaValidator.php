@@ -54,12 +54,12 @@ class SchemaValidator
 
         if (!property_exists($schemaJson, "definitions")) {
             // definition block not found
-            throw new InvalidJsonSchemaException(sprintf('json schema definitions "%s" not found', $definitionName));
+            throw new InvalidJsonSchemaException(sprintf('json schema definitions "%s" not found', $definitionName)); // @codeCoverageIgnore
         }
 
         if (!property_exists($schemaJson->definitions, $definitionName)) {
             // definition not found
-            throw new InvalidJsonSchemaException(sprintf("json schema '%s' not found", $definitionName));
+            throw new InvalidJsonSchemaException(sprintf("json schema '%s' not found", $definitionName)); // @codeCoverageIgnore
         }
 
         return $schemaJson->definitions->$definitionName;
