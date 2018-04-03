@@ -84,7 +84,7 @@ class Client
      * @param string $url URL
      * @param array $params array of request parameters
      */
-    private function __sendGET($url, $params = array())
+    private function __sendGET($url, $params = [])
     {
         if (getenv('ENV') === 'TEST') {
             // when testing

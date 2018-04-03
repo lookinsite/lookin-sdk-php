@@ -42,8 +42,7 @@ class ApiSearchRequest
      *
      * @var array
      */
-    private $config = array(
-    );
+    private $config = [];
 
     /**
      * schema validator
