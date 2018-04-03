@@ -41,7 +41,7 @@ class ClientTest extends TestCase
      * @expectedException \Lookin\Exception\SecretKeyNotSpecifiedException
      * @expectedExceptionCode 401
      */
-    public function testSearcEndhWith401()
+    public function testSearcEndWith401()
     {
         new Client();
     }

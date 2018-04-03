@@ -12,10 +12,14 @@ namespace Lookin\Request;
  */
 use Lookin\Schema\SchemaValidator;
 use Lookin\Exception\MissingKeyException;
-use Lookin\Exception\InvalidTypeException;
 
 /**
  * Build API search request and validate with json schema
+ *
+ * @property string $q
+ * @property int $size
+ * @property int $page
+ * @property string $device
  */
 class ApiSearchRequest
 {
@@ -30,7 +34,7 @@ class ApiSearchRequest
         'size' => 30,
         'page' => 1,
         'device' => 'desktop',
-        'domain' => '', // domain will be automatically set.
+        'domain' => '', // domain will be ignored.
     ];
 
     /**
