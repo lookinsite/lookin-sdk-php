@@ -66,7 +66,7 @@ class Client
         }
 
         // send search request
-        $url = sprintf('%s/search', $this->endpoint, 'search');
+        $url = $this->endpoint . 'search';
         $response = $this->__sendGET($url, $request->getRequest());
 
         if ($response->getStatusCode() >= 400) {
@@ -83,7 +83,7 @@ class Client
      * @param string $url URL
      * @param array $params array of request parameters
      */
-    private function __sendGET($url = '', $params = array())
+    private function __sendGET($url, $params = array())
     {
         if (getenv('ENV') === 'TEST') {
             // when testing

@@ -16,27 +16,47 @@ composer require lookin/sdk
 # Usage
 
 ```PHP
-require "/path/to/vendor/autoload.php";
+<?php
 
-use Lookin\Cient;
+require './vendor/autoload.php';
+
+ini_set("display_errors", "On");
+
+use Lookin\Client;
 use Lookin\Request\ApiSearchRequest;
 
-// initiate client
-$client = new Client("sk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+try {
 
-// build request
-$req = new ApiSearchRequest([
-  "q" => "sample keyword",
-  "device" => "desktop", // or mobile
-  "size" => 40, // optional
-  "page" => 1, // optional
-]);
+    // initiate client
+    $client = new Client("sk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-// send search request
-$res = $client->search($req);
+    // build request
+    $req = new ApiSearchRequest([
+        "q" => "keyword",
+        "device" => "desktop", // or mobile
+        "size" => 40, // optional
+        "page" => 1, // optional
+    ]);
 
-// get response
-$res->getRecords();
+    // send search request
+    $res = $client->search($req);
+
+    $str = 'Page %d of %d, showing %d records out of %d total, starting on record %d, ending on %d<br>';
+    echo sprintf($str, $res->current_page, $res->total_pages, $res->size, $res->total, $res->start, $res->end);
+
+    foreach ($res->getIterator() as $hit) {
+        echo $hit->title . "<br>";
+        echo $hit->url . "<br>";
+        echo $hit->score . "<br>";
+        echo $hit->content;
+        echo '<hr>';
+    }
+    
+} catch (\Exception $ex) {
+
+    echo $ex->getMessage();
+}
+
 ```
 
 # License

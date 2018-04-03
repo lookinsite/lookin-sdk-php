@@ -10,14 +10,25 @@ namespace Lookin\Response;
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+use ArrayIterator;
+use IteratorAggregate;
 use Lookin\Schema\SchemaValidator;
 use Lookin\Exception\MissingKeyException;
-use Lookin\Exception\InvalidTypeException;
 
 /**
  * Build API search response and validate with json schema
+ *
+ * @property int $total
+ * @property int $size
+ * @property int $current_page
+ * @property int $total_pages
+ * @property boolean $has_prev
+ * @property boolean $has_next
+ * @property int $start
+ * @property int $end
+ * @property int $duration duration time in ms
  */
-class ApiSearchResponse
+class ApiSearchResponse implements IteratorAggregate
 {
 
     /**
@@ -46,5 +57,29 @@ class ApiSearchResponse
         // validate schema
         $this->validator = new SchemaValidator();
         $this->validator->validate('api-search-response', $this->data);
+    }
+
+    /**
+     * getter
+     *
+     * @param string $key keyname
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (!property_exists($this->data, $key)) {
+            throw new MissingKeyException(sprintf('specified key "%s" not found', $key));
+        }
+        return $this->data->$key;
+    }
+
+    /**
+     * return iterator of pages
+     */
+    public function getIterator()
+    {
+        foreach ($this->data->hits as $key => $val) {
+            yield $key => $val;
+        }
     }
 }
