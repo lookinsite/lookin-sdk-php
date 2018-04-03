@@ -2,6 +2,16 @@
 
 namespace Lookin;
 
+/**
+ * Lookin
+ *
+ * @copyright     Copyright (c) Instoll. inc
+ * @link          https://lookin.site Lookin
+ * @since         1.0.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        tomohiroukawa https://github.com/tomohiroukawa
+ */
+
 use Lookin\Exception\HttpErrorException;
 use Lookin\Exception\InvalidRequestException;
 use Lookin\Exception\InvalidSecretKeyException;

@@ -9,8 +9,9 @@ namespace Lookin\Response;
  * @link          https://lookin.site Lookin
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        tomohiroukawa https://github.com/tomohiroukawa
  */
-use ArrayIterator;
+
 use IteratorAggregate;
 use Lookin\Schema\SchemaValidator;
 use Lookin\Exception\MissingKeyException;
