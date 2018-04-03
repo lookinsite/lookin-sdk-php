@@ -4,7 +4,7 @@ namespace Lookin;
 
 use Lookin\Exception\HttpErrorException;
 use Lookin\Exception\InvalidRequestException;
-use Lookin\Exception\SecretKeyNotSpecifiedException;
+use Lookin\Exception\InvalidSecretKeyException;
 use Lookin\Response\ApiSearchResponse;
 
 class Client
@@ -46,10 +46,20 @@ class Client
         }
 
         if (!$secretKey) {
-            throw new SecretKeyNotSpecifiedException('secret key not specified');
+            throw new InvalidSecretKeyException('secret key not specified');
+        }
+
+        if (!preg_match("/^sk_([0-9a-zA-Z]{40})$/", $secretKey)) {
+            // check secret key format
+            throw new InvalidSecretKeyException('secret key is invalid');
         }
 
         $this->secretKey = $secretKey;
+
+        if (getenv('LOOKIN_SEARCH_ENDPOINT')) {
+            // override endpoint with environment variable
+            $this->endpoint = getenv('LOOKIN_SEARCH_ENDPOINT');
+        }
     }
 
     /**

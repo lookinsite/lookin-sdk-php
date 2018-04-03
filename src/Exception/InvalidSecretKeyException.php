@@ -13,9 +13,9 @@ namespace Lookin\Exception;
 use Exception;
 
 /**
- * Secret key not specified exception
+ * Invalid secret key not specified exception
  */
-class SecretKeyNotSpecifiedException extends Exception
+class InvalidSecretKeyException extends Exception
 {
 
     /**

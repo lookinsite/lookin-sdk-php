@@ -36,12 +36,23 @@ class ClientTest extends TestCase
     /**
      * fail with 401 response
      *
-     * @expectedException \Lookin\Exception\SecretKeyNotSpecifiedException
+     * @expectedException \Lookin\Exception\InvalidSecretKeyException
      * @expectedExceptionCode 401
      */
     public function testSearcEndWith401()
     {
         new Client();
+    }
+
+    /**
+     * fail with 401 response 2
+     *
+     * @expectedException \Lookin\Exception\InvalidSecretKeyException
+     * @expectedExceptionCode 401
+     */
+    public function testSearchEndWith401()
+    {
+        new Client("invalid_format");
     }
 
     /**
@@ -52,7 +63,7 @@ class ClientTest extends TestCase
      */
     public function testSearchEndWith406()
     {
-        $client = new Client('dummy');
+        $client = new Client('sk_0000000000000000000000000000000000000000');
         $obj = new \stdClass();
         $client->search($obj);
     }
@@ -69,7 +80,7 @@ class ClientTest extends TestCase
             new \GuzzleHttp\Psr7\Response(200, [], ""),
         ];
 
-        $client = new Client('sk_00000000000000000000000000000000');
+        $client = new Client('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
@@ -88,7 +99,7 @@ class ClientTest extends TestCase
         $mockresponse = [
             new \GuzzleHttp\Psr7\Response(400, [], '{"status":400,"message":"Please specify a search keyword."}'),
         ];
-        $client = new Client('sk_00000000000000000000000000000000');
+        $client = new Client('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
@@ -105,7 +116,7 @@ class ClientTest extends TestCase
         $mockresponse = [
             new \GuzzleHttp\Psr7\Response(302, [], '{"duration": 3,"total": 2,"size": 30,"total_pages": 1,"current_page": 1,"has_prev": false,"has_next": false,"start": 1,"end": 2,"hits": [{"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page1","score": 13.4268875}, {"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page2","score": 13.4268875}]}'),
         ];
-        $client = new Client('sk_00000000000000000000000000000000');
+        $client = new Client('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
