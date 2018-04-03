@@ -12,6 +12,7 @@ namespace Lookin\Schema;
  */
 use JsonSchema\Validator;
 use Lookin\Exception\InvalidJsonSchemaException;
+use Exception;
 
 /**
  * Validate with jsonschema
@@ -45,22 +46,19 @@ class SchemaValidator
         $schema = sprintf('file://%s/%s.json', dirname(__FILE__), $definitionName);
 
         if (!file_exists($schema)) {
-            // ここでは、ローカライズ無視
-            // 基本的にあってはならない例外
+            // schema file not found
             throw new Exception(sprintf("json schema file not found. path: %s", $schema));
         }
 
         $schemaJson = json_decode(file_get_contents($schema));
 
         if (!property_exists($schemaJson, "definitions")) {
-            // スキーマファイルのバリデート
-            // 基本的にあってはならない例外。バグレベルなので。
+            // definition block not found
             throw new InvalidJsonSchemaException(sprintf('json schema definitions "%s" not found', $definitionName));
         }
 
         if (!property_exists($schemaJson->definitions, $definitionName)) {
-            // ここも、ローカライズ無視
-            // 基本的にあってはならない例外。バグレベルなので。
+            // definition not found
             throw new InvalidJsonSchemaException(sprintf("json schema '%s' not found", $definitionName));
         }
 
