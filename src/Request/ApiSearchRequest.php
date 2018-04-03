@@ -11,6 +11,8 @@ namespace Lookin\Request;
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 use Lookin\Schema\SchemaValidator;
+use Lookin\Exception\MissingKeyException;
+use Lookin\Exception\InvalidTypeException;
 
 /**
  * Build API search request and validate with json schema
@@ -59,5 +61,23 @@ class ApiSearchRequest
     {
         $validator = new SchemaValidator();
         $validator->validate('api-search-request', $data);
+    }
+
+    /**
+     * property setter
+     *
+     * @param string $name keyname of $config
+     * @param mixed $value
+     * @throws MissingKeyException
+     */
+    public function __set($name, $value)
+    {
+        if (!isset($this->config[$name])) {
+            // array key missing
+            throw new MissingKeyException(sprintf('specified key "%s" not found.', $name));
+        }
+
+        $this->config[$name] = $value;
+        $this->validate($this->config);
     }
 }
