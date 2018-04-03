@@ -41,9 +41,9 @@ class ClientTest extends TestCase
      * @expectedException \Lookin\Exception\SecretKeyNotSpecifiedException
      * @expectedExceptionCode 401
      */
-    public function testSearchWith401()
+    public function testSearcEndhWith401()
     {
-        $this->client = new Client();
+        $client = new Client();
     }
 
     /**
@@ -52,21 +52,70 @@ class ClientTest extends TestCase
      * @expectedException \Lookin\Exception\InvalidRequestException
      * @expectedExceptionCode 406
      */
-    public function testSearchWith406()
+    public function testSearchEndWith406()
     {
-        $this->client = new Client("hogehoge");
+        $client = new Client('dummy');
         $obj = new \stdClass();
-        $this->client->search($obj);
+        $client->search($obj);
     }
 
     /**
-     * 正常系
+     * search 異常系
+     *
+     * @expectedException \Lookin\Exception\InvalidJsonSchemaException
+     * @expectedExceptionCode 500
      */
-    public function testSearch()
+    public function testSearchFailure()
     {
-        $this->client = new Client("hogehoge");
+        $mockresponse = [
+            new \GuzzleHttp\Psr7\Response(200),
+        ];
+
+        $client = new Client('sk_00000000000000000000000000000000');
+
+        // モックを設定
+        $client->mockResponses = $mockresponse;
         $req = new \Lookin\Request\ApiSearchRequest();
-        $res = $this->client->search($req);
-        $this->assertEquals("", $res);
+        $res = $client->search($req);
+        $this->assertEquals('[{"property":"","pointer":"","message":"NULL value found, but an object is required","constraint":"type","context":1}]', $res);
+    }
+
+    /**
+     * search 異常系
+     *
+     * @expectedException \GuzzleHttp\Exception\ClientException
+     * @expectedExceptionCode 400
+     */
+    public function testSearchEndWith400()
+    {
+        $mockresponse = [
+            new \GuzzleHttp\Psr7\Response(400, [], '{"status":400,"message":"Please specify a search keyword."}'),
+        ];
+        $client = new Client('sk_00000000000000000000000000000000');
+
+        // モックを設定
+        $client->mockResponses = $mockresponse;
+        $req = new \Lookin\Request\ApiSearchRequest();
+        $client->search($req);
+    }
+
+    /**
+     * search 正常系
+     *
+     */
+    public function testSearchEndWithOK()
+    {
+        $mockresponse = [
+            new \GuzzleHttp\Psr7\Response(302, [], '{"duration": 3,"total": 2,"size": 30,"total_pages": 1,"current_page": 1,"has_prev": false,"has_next": false,"start": 1,"end": 2,"hits": [{"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page1","score": 13.4268875}, {"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page2","score": 13.4268875}]}'),
+        ];
+        $client = new Client('sk_00000000000000000000000000000000');
+
+        // モックを設定
+        $client->mockResponses = $mockresponse;
+        $req = new \Lookin\Request\ApiSearchRequest();
+        $req->q = "keyword";
+
+        $res = $client->search($req);
+        $this->assertEquals('Lookin\Response\ApiSearchResponse', get_class($res));
     }
 }

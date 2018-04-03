@@ -13,9 +13,9 @@ namespace Lookin\Exception;
 use Exception;
 
 /**
- * Invalid json schema exception
+ * Missing key exception exception
  */
-class InvalidJsonSchemaException extends Exception
+class MissingKeyException extends Exception
 {
 
     /**
@@ -27,6 +27,6 @@ class InvalidJsonSchemaException extends Exception
      */
     public function __construct($message, $code = null, $previous = null)
     {
-        parent::__construct($message, 500, $previous);
+        parent::__construct($message, 404, $previous);
     }
 }

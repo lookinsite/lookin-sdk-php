@@ -39,13 +39,16 @@ class SchemaValidator
      */
     public function validate($schema = null, $data = [])
     {
-        var_dump($data);
-        $schemaPath = sprintf('file://%s/%s.json', dirname(__FILE__), $schema);
+        if (is_array($data)) {
+            // cast object if array
+            $data = (object) $data;
+        }
+
+        $schemaPath = sprintf('file://%s/schema.json', dirname(__FILE__));
         $this->validator->validate($data, (object) ['$ref' => $schemaPath]);
         $_errors = $this->validator->getErrors();
 
         if (!empty($_errors)) {
-            // バリデート失敗時は例外スロー
             throw new InvalidJsonSchemaException(sprintf("json is invalid. definition: %s message: %s", $schema, json_encode($_errors)));
         }
     }

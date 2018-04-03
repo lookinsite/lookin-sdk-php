@@ -13,7 +13,7 @@ namespace Lookin\Exception;
 use Exception;
 
 /**
- * secret key not specified exception
+ * Secret key not specified exception
  */
 class SecretKeyNotSpecifiedException extends Exception
 {

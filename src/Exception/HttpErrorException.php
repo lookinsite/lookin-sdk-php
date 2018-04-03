@@ -13,7 +13,7 @@ namespace Lookin\Exception;
 use Exception;
 
 /**
- * secret key not specified exception
+ * Http error exception
  */
 class HttpErrorException extends Exception
 {

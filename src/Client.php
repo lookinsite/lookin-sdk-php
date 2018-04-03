@@ -16,8 +16,7 @@ class Client
      *
      * @var string
      */
-//    private $endpoint = 'https://api.staging.lookin.site/';
-    private $endpoint = 'http://localhost:10080/';
+    private $endpoint = 'https://api.staging.lookin.site/';
 
     /**
      * Request instance
@@ -25,6 +24,13 @@ class Client
      * @var \Lookin\Request\ApiSearchRequest
      */
     private $request = null;
+
+    /**
+     * Mock response array for testing
+     *
+     * @var array
+     */
+    public $mockResponses = [];
 
     /**
      * Lookin secret key
@@ -37,11 +43,11 @@ class Client
     {
         if (!$secretKey) {
             // get secret key from environment variable if not specified.
-            $secretKey = getenv("LOOKIN_SECRET_KEY");
+            $secretKey = getenv('LOOKIN_SECRET_KEY');
         }
 
         if (!$secretKey) {
-            throw new SecretKeyNotSpecifiedException("secret key not specified");
+            throw new SecretKeyNotSpecifiedException('secret key not specified');
         }
 
         $this->secretKey = $secretKey;
@@ -64,19 +70,14 @@ class Client
         $url = sprintf('%s/search', $this->endpoint, 'search');
         $response = $this->__sendGET($url, $request);
 
-        $headers = $response->getHeaders();
-
-        if ($response->getStatusCode() != 200) {
-            throw new HttpErrorException(sprintf('http error occurred because of "%s"', $response->getReasonPhrase()), $response->getStatusCode());
+        if ($response->getStatusCode() >= 400) {
+            throw new HttpErrorException(sprintf('http error occurred because of "%s %s"', $response->getStatusCode(), $response->getReasonPhrase()), $response->getStatusCode());
         }
 
         // create response instance
-        $body = (string) $response->getBody();
+        $res = new ApiSearchResponse((string) $response->getBody());
 
-        $res = new ApiSearchResponse($body);
-
-
-        var_dump($res->getResponse());
+        return $res;
     }
 
     /**
@@ -87,7 +88,16 @@ class Client
      */
     private function __sendGET($url = '', $params = array())
     {
-        $client = new \GuzzleHttp\Client();
+        if (getenv('ENV') === 'TEST') {
+            // when testing
+            $mock = new \GuzzleHttp\Handler\MockHandler($this->mockResponses);
+            $handler = \GuzzleHttp\HandlerStack::create($mock);
+            $client = new \GuzzleHttp\Client(['handler' => $handler]);
+        } else {
+            // when not testing
+            $client = new \GuzzleHttp\Client();
+        }
+
         $response = $client->request('GET', $url, [
             'Authorization' => $this->secretKey,
         ]);

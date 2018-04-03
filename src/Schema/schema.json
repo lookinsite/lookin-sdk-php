@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": [
+    "object"
+  ],
+  "definitions": {
+    "api-search-request": {
+      "title": "Api Search Request",
+      "strictProperties": true,
+      "description": "APIの検索リクエストのスキーマ定義。\n",
+      "type": [
+        "object"
+      ],
+      "required": [
+        "q",
+        "size",
+        "page",
+        "device",
+        "domain"
+      ],
+      "properties": {
+        "q": {
+          "description": "クエリ文字列",
+          "type": [
+            "string"
+          ]
+        },
+        "size": {
+          "description": "検索結果のサイズ",
+          "type": [
+            "integer"
+          ]
+        },
+        "page": {
+          "description": "ページ番号",
+          "type": [
+            "integer"
+          ]
+        },
+        "device": {
+          "description": "デバイス名称",
+          "type": [
+            "string"
+          ],
+          "enum": [
+            "desktop",
+            "mobile"
+          ]
+        },
+        "domain": {
+          "description": "ドメイン名",
+          "type": [
+            "string"
+          ]
+        }
+      }
+    },
+    "api-search-response": {
+      "title": "Api Search Response",
+      "strictProperties": true,
+      "description": "APIからの検索レスポンスのスキーマ定義。  \nhttps://github.com/instoll/lookin/pull/184#issuecomment-370295655\n",
+      "type": [
+        "object"
+      ],
+      "required": [
+        "total",
+        "size",
+        "current_page",
+        "total_pages",
+        "has_prev",
+        "has_next",
+        "start",
+        "end",
+        "duration",
+        "hits"
+      ],
+      "properties": {
+        "total": {
+          "description": "検索結果の全件数。",
+          "type": [
+            "integer"
+          ]
+        },
+        "size": {
+          "description": "ページあたり表示数",
+          "type": [
+            "integer"
+          ]
+        },
+        "current_page": {
+          "description": "現在のページ番号",
+          "type": [
+            "integer"
+          ]
+        },
+        "total_pages": {
+          "description": "全ページ数",
+          "type": [
+            "integer"
+          ]
+        },
+        "has_prev": {
+          "description": "前のページがあるかどうか",
+          "type": [
+            "bool"
+          ]
+        },
+        "has_next": {
+          "description": "次のページがあるかどうか",
+          "type": [
+            "bool"
+          ]
+        },
+        "start": {
+          "description": "そのページの開始位置を表すオフセット番号",
+          "type": [
+            "integer"
+          ]
+        },
+        "end": {
+          "description": "そのページの終了位置を表すオフセット番号",
+          "type": [
+            "integer"
+          ]
+        },
+        "duration": {
+          "description": "検索にかかった秒数（ミリ秒）。",
+          "type": [
+            "integer"
+          ]
+        },
+        "hits": {
+          "description": "検索結果レコードの配列。",
+          "type": [
+            "array"
+          ],
+          "items": {
+            "type": [
+              "object"
+            ],
+            "properties": {
+              "language": {
+                "description": "ページの言語情報。",
+                "type": [
+                  "string"
+                ]
+              },
+              "title": {
+                "description": "ページタイトル。",
+                "type": [
+                  "string"
+                ]
+              },
+              "content": {
+                "description": "ページ本文。",
+                "type": [
+                  "string"
+                ]
+              },
+              "url": {
+                "description": "ページURL。",
+                "type": [
+                  "string"
+                ]
+              },
+              "score": {
+                "description": "一致度を表すスコア。",
+                "type": [
+                  "number"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "api-search-request": {
+      "$ref": "#/definitions/api-search-request"
+    },
+    "api-search-response": {
+      "$ref": "#/definitions/api-search-response"
+    }
+  },
+  "id": "schema",
+  "title": "Schema Service",
+  "description": "API json schema"
+}

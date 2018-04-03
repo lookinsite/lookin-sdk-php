@@ -13,7 +13,7 @@ namespace Lookin\Exception;
 use Exception;
 
 /**
- * invalid request
+ * Invalid request
  */
 class InvalidRequestException extends Exception
 {

@@ -11,6 +11,8 @@ namespace Lookin\Response;
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 use Lookin\Schema\SchemaValidator;
+use Lookin\Exception\MissingKeyException;
+use Lookin\Exception\InvalidTypeException;
 
 /**
  * Build API search response and validate with json schema
@@ -19,14 +21,20 @@ class ApiSearchResponse
 {
 
     /**
+     * array of response data
      *
      * @var array
      */
     private $data = [];
 
-    public function __construct($body = null)
+    /**
+     * constructor
+     *
+     * @param string $str
+     */
+    public function __construct($str = null)
     {
-        $this->data = json_decode($body, true);
+        $this->data = json_decode($str, true);
 
         $this->build($this->data);
     }
