@@ -36,18 +36,18 @@ class ClientTest extends TestCase
     }
 
     /**
-     * 401エラーが発生するテストケース
+     * fail with 401 response
      *
      * @expectedException \Lookin\Exception\SecretKeyNotSpecifiedException
      * @expectedExceptionCode 401
      */
     public function testSearcEndhWith401()
     {
-        $client = new Client();
+        new Client();
     }
 
     /**
-     * 406エラーが発生するテストケース
+     * fail with 406 response
      *
      * @expectedException \Lookin\Exception\InvalidRequestException
      * @expectedExceptionCode 406
@@ -60,7 +60,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * search 異常系
+     * fail with 500 response
      *
      * @expectedException \Lookin\Exception\InvalidJsonSchemaException
      * @expectedExceptionCode 500
@@ -68,7 +68,7 @@ class ClientTest extends TestCase
     public function testSearchFailure()
     {
         $mockresponse = [
-            new \GuzzleHttp\Psr7\Response(200),
+            new \GuzzleHttp\Psr7\Response(200, [], ""),
         ];
 
         $client = new Client('sk_00000000000000000000000000000000');
@@ -76,8 +76,7 @@ class ClientTest extends TestCase
         // モックを設定
         $client->mockResponses = $mockresponse;
         $req = new \Lookin\Request\ApiSearchRequest();
-        $res = $client->search($req);
-        $this->assertEquals('[{"property":"","pointer":"","message":"NULL value found, but an object is required","constraint":"type","context":1}]', $res);
+        $client->search($req);
     }
 
     /**
@@ -113,7 +112,6 @@ class ClientTest extends TestCase
         // モックを設定
         $client->mockResponses = $mockresponse;
         $req = new \Lookin\Request\ApiSearchRequest();
-        $req->q = "keyword";
 
         $res = $client->search($req);
         $this->assertEquals('Lookin\Response\ApiSearchResponse', get_class($res));

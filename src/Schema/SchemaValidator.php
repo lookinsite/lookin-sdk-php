@@ -20,7 +20,7 @@ class SchemaValidator
 {
 
     /**
-     *  JsonSchema Validator instance
+     * validator instance
      *
      * @var \JsonSchema\Validator
      */
@@ -29,27 +29,66 @@ class SchemaValidator
     public function __construct()
     {
         $this->validator = new Validator();
+
+        return $this;
     }
 
     /**
-     * Validate array with JSON Schema
+     * get schema definition
      *
-     * @param string $schema Schema name
+     * @param string $definitionName name of the definition
+     * @throws Exception
+     * @return object
+     */
+    private function getJSONSchema($definitionName)
+    {
+        $schema = sprintf('file://%s/%s.json', dirname(__FILE__), $definitionName);
+
+        if (!file_exists($schema)) {
+            // ここでは、ローカライズ無視
+            // 基本的にあってはならない例外
+            throw new Exception(sprintf("json schema file not found. path: %s", $schema));
+        }
+
+        $schemaJson = json_decode(file_get_contents($schema));
+
+        if (!property_exists($schemaJson, "definitions")) {
+            // スキーマファイルのバリデート
+            // 基本的にあってはならない例外。バグレベルなので。
+            throw new InvalidJsonSchemaException(sprintf('json schema definitions "%s" not found', $definitionName));
+        }
+
+        if (!property_exists($schemaJson->definitions, $definitionName)) {
+            // ここも、ローカライズ無視
+            // 基本的にあってはならない例外。バグレベルなので。
+            throw new InvalidJsonSchemaException(sprintf("json schema '%s' not found", $definitionName));
+        }
+
+        return $schemaJson->definitions->$definitionName;
+    }
+
+    /**
+     * validate array with JSON Schema
+     *
+     * @param string $definitionName Schema definition
      * @param array $data array to validate
      */
-    public function validate($schema = null, $data = [])
+    public function validate($definitionName = null, $data = [])
     {
-        if (is_array($data)) {
-            // cast object if array
+        if (!is_object($data)) {
+            // cast object if not object
             $data = (object) $data;
         }
 
-        $schemaPath = sprintf('file://%s/schema.json', dirname(__FILE__));
-        $this->validator->validate($data, (object) ['$ref' => $schemaPath]);
-        $_errors = $this->validator->getErrors();
+        // get definition
+        $schema = $this->getJSONSchema($definitionName);
 
-        if (!empty($_errors)) {
-            throw new InvalidJsonSchemaException(sprintf("json is invalid. definition: %s message: %s", $schema, json_encode($_errors)));
+        // validate
+        $this->validator->validate($data, $schema);
+
+        if (!$this->validator->isValid()) {
+            $_errors = $this->validator->getErrors();
+            throw new InvalidJsonSchemaException(sprintf("json is invalid. definition: %s message: %s", $definitionName, json_encode($_errors)));
         }
     }
 }

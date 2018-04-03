@@ -41,26 +41,33 @@ class ApiSearchRequest
     private $config = array(
     );
 
+    /**
+     * schema validator
+     *
+     * @var SchemaValidator
+     */
+    private $validator;
+
+    /**
+     * constructor
+     *
+     * @param array $opts
+     */
     public function __construct($opts = [])
     {
         $this->config = array_merge($this->defaults, $opts);
+        $this->validator = new SchemaValidator();
+        $this->validator->validate('api-search-request', $this->config);
     }
 
-    public function build()
-    {
-        // Validate with json schema
-        $this->validate($this->config);
-    }
-
+    /**
+     * returns request configuration
+     *
+     * @return array
+     */
     public function getRequest()
     {
         return $this->config;
-    }
-
-    public function validate($data = [])
-    {
-        $validator = new SchemaValidator();
-        $validator->validate('api-search-request', $data);
     }
 
     /**
@@ -78,6 +85,6 @@ class ApiSearchRequest
         }
 
         $this->config[$name] = $value;
-        $this->validate($this->config);
+        $this->validator->validate('api-search-request', $this->config);
     }
 }

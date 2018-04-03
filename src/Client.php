@@ -68,16 +68,14 @@ class Client
 
         // send search request
         $url = sprintf('%s/search', $this->endpoint, 'search');
-        $response = $this->__sendGET($url, $request);
+        $response = $this->__sendGET($url, $request->getRequest());
 
         if ($response->getStatusCode() >= 400) {
             throw new HttpErrorException(sprintf('http error occurred because of "%s %s"', $response->getStatusCode(), $response->getReasonPhrase()), $response->getStatusCode());
         }
 
         // create response instance
-        $res = new ApiSearchResponse((string) $response->getBody());
-
-        return $res;
+        return new ApiSearchResponse((string) $response->getBody());
     }
 
     /**
@@ -92,14 +90,17 @@ class Client
             // when testing
             $mock = new \GuzzleHttp\Handler\MockHandler($this->mockResponses);
             $handler = \GuzzleHttp\HandlerStack::create($mock);
-            $client = new \GuzzleHttp\Client(['handler' => $handler]);
+            $http = new \GuzzleHttp\Client(['handler' => $handler]);
         } else {
             // when not testing
-            $client = new \GuzzleHttp\Client();
+            $http = new \GuzzleHttp\Client();
         }
 
-        $response = $client->request('GET', $url, [
-            'Authorization' => $this->secretKey,
+        $response = $http->request('GET', $url, [
+            'headers' => [
+                'Authorization' => $this->secretKey,
+            ],
+            'query' => $params,
         ]);
 
         return $response;

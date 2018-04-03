@@ -28,31 +28,23 @@ class ApiSearchResponse
     private $data = [];
 
     /**
+     * schema validator
+     *
+     * @var SchemaValidator
+     */
+    private $validator;
+
+    /**
      * constructor
      *
      * @param string $str
      */
     public function __construct($str = null)
     {
-        $this->data = json_decode($str, true);
+        $this->data = json_decode($str);
 
-        $this->build($this->data);
-    }
-
-    public function build($data)
-    {
-        // Validate with json schema
-        $this->validate($data);
-    }
-
-    public function getResponse()
-    {
-        return $this->data;
-    }
-
-    public function validate($data = [])
-    {
-        $validator = new SchemaValidator();
-        $validator->validate('api-search-response', $data);
+        // validate schema
+        $this->validator = new SchemaValidator();
+        $this->validator->validate('api-search-response', $this->data);
     }
 }
