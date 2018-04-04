@@ -11,9 +11,11 @@ jobs:
         command: |
           ls -al
           pwd
+          php -v
+      - run:
         name: Run test
-          make test
-      
+        command: make test
+
   # build-php70:
   #   docker:
   #     - image: tomohiroukawa/php-cli:7.0
