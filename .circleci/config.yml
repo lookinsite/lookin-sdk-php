@@ -1,21 +1,30 @@
 version: 2
 jobs:
-  build:
-    machine:
-      # Ask CircleCI support to enable this feature.
-      docker_layer_caching: true
+  build-php56:
     steps:
       - checkout
-
-      - run:
-          name: Build containers
-          command: |
-            make up
-      - run:
-          name: Installing composer libraries
-          command: |
-            make install_in_docker
-      - run:
-          name: Run tests
-          command: |
-            make test_in_docker
+      - run: docker-compose up -d php56
+      - run: make test_php56
+  build-php70:
+    steps:
+      - checkout
+      - run: docker-compose up -d php70
+      - run: make test_php70
+  build-php71:
+    steps:
+      - checkout
+      - run: docker-compose up -d php71
+      - run: make test_php71
+  build-php72:
+    steps:
+      - checkout
+      - run: docker-compose up -d php72
+      - run: make test_php72
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-php56
+      - build-php70
+      - build-php71
+      - build-php72
