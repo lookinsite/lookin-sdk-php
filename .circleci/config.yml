@@ -8,16 +8,16 @@ jobs:
       - checkout
 
       - run:
-        name: Info
-        command: |
-          ls -al
-          pwd
-          php -v
+          name: Info
+          command: |
+            ls -al
+            pwd
+            php -v
 
       - run:
-        name: Run test
-        command: |
-          make test
+          name: Run test
+          command: |
+            make test
 
   # build-php70:
   #   docker:
