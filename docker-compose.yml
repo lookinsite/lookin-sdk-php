@@ -2,29 +2,25 @@ version: "2"
 services:
 
   php56:
-      image: lookin_php56
+      image: tomohiroukawa/php-cli:5.6
       container_name: lookin_php56
-      build: .circleci/php56
       volumes:
         - .:/php
 
   php70:
-      image: lookin_php70
+      image: tomohiroukawa/php-cli:7.0
       container_name: lookin_php70
-      build: .circleci/php70
       volumes:
         - .:/php
 
   php71:
-      image: lookin_php71
+      image: tomohiroukawa/php-cli:7.1
       container_name: lookin_php71
-      build: .circleci/php71
       volumes:
         - .:/php
 
   php72:
-      image: lookin_php72
+      image: tomohiroukawa/php-cli:7.2
       container_name: lookin_php72
-      build: .circleci/php72
       volumes:
         - .:/php

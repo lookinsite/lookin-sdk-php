@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    machine:
+      # Ask CircleCI support to enable this feature.
+      docker_layer_caching: true
+    steps:
+      - checkout
+
+      - run:
+          name: Build containers
+          command: |
+            make up
+      - run:
+          name: Installing composer libraries
+          command: |
+            make install_in_docker
+      - run:
+          name: Run tests
+          command: |
+            make test_in_docker

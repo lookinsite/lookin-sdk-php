@@ -9,6 +9,12 @@ down:
 test:
 	./vendor/bin/phpunit --colors
 
+install:
+	composer install
+
+install_in_docker:
+	docker exec -it lookin_php56 bash -c "make install"
+
 test_in_docker:
 	docker exec -it lookin_php56 bash -c "make test"
 	docker exec -it lookin_php70 bash -c "make test"
