@@ -8,11 +8,6 @@ jobs:
       - checkout
 
       - run:
-          name: PHP version
-          command: |
-            php -v
-
-      - run:
           name: Run test
           command: |
             composer install
@@ -24,11 +19,6 @@ jobs:
       - image: tomohiroukawa/php-cli:7.0
     steps:
       - checkout
-
-      - run:
-          name: PHP version
-          command: |
-            php -v
 
       - run:
           name: Run test
@@ -44,11 +34,6 @@ jobs:
       - checkout
 
       - run:
-          name: PHP version
-          command: |
-            php -v
-
-      - run:
           name: Run test
           command: |
             composer install
@@ -60,11 +45,6 @@ jobs:
       - image: tomohiroukawa/php-cli:7.2
     steps:
       - checkout
-
-      - run:
-          name: PHP version
-          command: |
-            php -v
 
       - run:
           name: Run test
