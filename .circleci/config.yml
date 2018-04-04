@@ -8,35 +8,70 @@ jobs:
       - checkout
 
       - run:
-          name: Info
+          name: PHP version
           command: |
-            ls -al
-            pwd
             php -v
 
       - run:
           name: Run test
           command: |
+            composer install
             make test
 
-  # build-php70:
-  #   docker:
-  #     - image: tomohiroukawa/php-cli:7.0
-  #   steps:
-  #     - checkout
-  #     - run: make test_php70
-  # build-php71:
-  #   docker:
-  #     - image: tomohiroukawa/php-cli:7.1
-  #   steps:
-  #     - checkout
-  #     - run: make test_php70
-  # build-php72:
-  #   docker:
-  #     - image: tomohiroukawa/php-cli:7.2
-  #   steps:
-  #     - checkout
-  #     - run: make test_php72
+  build-php70:
+    working_directory: /php
+    docker:
+      - image: tomohiroukawa/php-cli:7.0
+    steps:
+      - checkout
+
+      - run:
+          name: PHP version
+          command: |
+            php -v
+
+      - run:
+          name: Run test
+          command: |
+            composer install
+            make test
+
+  build-php71:
+    working_directory: /php
+    docker:
+      - image: tomohiroukawa/php-cli:7.1
+    steps:
+      - checkout
+
+      - run:
+          name: PHP version
+          command: |
+            php -v
+
+      - run:
+          name: Run test
+          command: |
+            composer install
+            make test
+
+  build-php72:
+    working_directory: /php
+    docker:
+      - image: tomohiroukawa/php-cli:7.2
+    steps:
+      - checkout
+
+      - run:
+          name: PHP version
+          command: |
+            php -v
+
+      - run:
+          name: Run test
+          command: |
+            composer install
+            make test
+
 workflows:
   version: 2
   build:
