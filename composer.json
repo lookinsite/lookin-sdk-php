@@ -9,7 +9,7 @@
         }
     },
     "config": {
-      "preffered-insta:": "dist",
+      "preffered-install": "dist",
       "sort-packages": true,
       "optimize-autoloader": true,
         "platform": {
