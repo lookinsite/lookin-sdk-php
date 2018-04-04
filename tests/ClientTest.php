@@ -37,7 +37,7 @@ class ClientTest extends TestCase
      * fail with 401 response
      *
      * @expectedException \Lookin\Exception\InvalidSecretKeyException
-     * @expectedExceptionCode 403
+     * @expectedExceptionCode 401
      */
     public function testSearcEndWith401()
     {
