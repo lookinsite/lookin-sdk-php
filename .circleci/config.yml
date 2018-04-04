@@ -11,23 +11,18 @@ jobs:
       - image: tomohiroukawa/php-cli:7.0
     steps:
       - checkout
-      - run: |
-        docker-compose up -d php70
-        make test_php70
+      - run: make test_php70
   build-php71:
     docker:
       - image: tomohiroukawa/php-cli:7.1
     steps:
       - checkout
-      - run: |
-        docker-compose up -d php71
-        make test_php71
+      - run: make test_php70
   build-php72:
     docker:
       - image: tomohiroukawa/php-cli:7.2
     steps:
       - checkout
-      - run: docker-compose up -d php72
       - run: make test_php72
 workflows:
   version: 2
