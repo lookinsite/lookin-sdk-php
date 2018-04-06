@@ -3,7 +3,7 @@
 Lookin is a simple-site-search engine.  
 This is sdk for PHP.
 
-[![CircleCI](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php.svg?style=svg)](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php)
+[![CircleCI](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php/tree/master.svg?style=svg)](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php/tree/master)
 
 # Requirements
 
