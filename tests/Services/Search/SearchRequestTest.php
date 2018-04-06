@@ -1,19 +1,15 @@
 <?php
 
-namespace Lookin\Tests\Request;
+namespace Lookin\Tests\Services\Search;
 
 use PHPUnit\Framework\TestCase;
-use Lookin\Request\ApiSearchRequest;
+use Lookin\Services\Search\SearchRequest;
 
 /**
  * Lookin\Client test
- *
- * @property \Lookin\ApiSearchRequest $request
  */
-class ApiSearchRequestTest extends TestCase
+class SearchRequestTest extends TestCase
 {
-
-    private $client;
 
     /**
      * setUp method
@@ -43,7 +39,7 @@ class ApiSearchRequestTest extends TestCase
      */
     public function testSetEndWith404()
     {
-        $req = new ApiSearchRequest();
+        $req = new SearchRequest();
         $req->invalid = "dummy";
     }
 
@@ -91,7 +87,7 @@ class ApiSearchRequestTest extends TestCase
         ];
 
         foreach ($cases as $i => $case) {
-            $req = new ApiSearchRequest();
+            $req = new SearchRequest();
             foreach ($case['data'] as $k => $v) {
                 try {
                     $req->$k = $v;
@@ -110,7 +106,7 @@ class ApiSearchRequestTest extends TestCase
      */
     public function testGetResponse()
     {
-        $req = new ApiSearchRequest();
+        $req = new SearchRequest();
         $config = $req->getRequest();
         $this->assertEquals('{"q":"","size":30,"page":1,"device":"desktop","domain":""}', json_encode($config));
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lookin\Response;
+namespace Lookin\Services\Search;
 
 /**
  * Lookin
@@ -17,7 +17,7 @@ use Lookin\Schema\SchemaValidator;
 use Lookin\Exception\MissingKeyException;
 
 /**
- * Build API search response and validate with json schema
+ * Build search response and validate with json schema
  *
  * @property int $total
  * @property int $size
@@ -29,7 +29,7 @@ use Lookin\Exception\MissingKeyException;
  * @property int $end
  * @property int $duration duration time in ms
  */
-class ApiSearchResponse implements IteratorAggregate
+class SearchResponse implements IteratorAggregate
 {
 
     /**

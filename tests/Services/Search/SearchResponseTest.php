@@ -1,19 +1,15 @@
 <?php
 
-namespace Lookin\Tests\Request;
+namespace Lookin\Tests\Services\Search;
 
 use PHPUnit\Framework\TestCase;
-use Lookin\Response\ApiSearchResponse;
+use Lookin\Services\Search\SearchResponse;
 
 /**
  * Lookin\Client test
- *
- * @property \Lookin\ApiSearchRequest $request
  */
-class ApiSearchResponseTest extends TestCase
+class SearchResponseTest extends TestCase
 {
-
-    private $client;
 
     /**
      * setUp method
@@ -58,7 +54,7 @@ class ApiSearchResponseTest extends TestCase
         foreach ($cases as $i => $case) {
 
             try {
-                new ApiSearchResponse($case['data']);
+                new SearchResponse($case['data']);
                 $res = true;
             } catch (\Exception $_) {
                 $res = false;
@@ -74,7 +70,7 @@ class ApiSearchResponseTest extends TestCase
     public function test_get()
     {
         // prepare
-        $response = new ApiSearchResponse($this->okResponse);
+        $response = new SearchResponse($this->okResponse);
 
         $cases = [
             // ok
@@ -109,7 +105,7 @@ class ApiSearchResponseTest extends TestCase
     public function testGetIterator()
     {
         // prepare
-        $response = new ApiSearchResponse($this->okResponse);
+        $response = new SearchResponse($this->okResponse);
         $it = $response->getIterator();
         $this->assertTrue(get_class($it) === "Generator");
 
