@@ -45,7 +45,7 @@ class SchemaValidator
      */
     private function getJSONSchema($definitionName)
     {
-        $schema = sprintf('file://%s/%s.json', dirname(__FILE__), $definitionName);
+        $schema = sprintf('file://%s/JSON/%s.json', dirname(__FILE__), $definitionName);
 
         if (!file_exists($schema)) {
             // schema file not found

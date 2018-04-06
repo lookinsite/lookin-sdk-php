@@ -1,16 +1,18 @@
 <?php
 
-namespace Lookin\Tests;
+namespace Lookin\Tests\Services\Search;
 
 use PHPUnit\Framework\TestCase;
-use Lookin\Client;
+use Lookin\Services\Search\SearchClient;
+use Lookin\Services\Search\SearchRequest;
+
 
 /**
  * Lookin\Client test
  *
  * @property \Lookin\LookinClient $client
  */
-class ClientTest extends TestCase
+class SearchClientTest extends TestCase
 {
 
     /**
@@ -41,7 +43,7 @@ class ClientTest extends TestCase
      */
     public function testSearcEndWith401()
     {
-        new Client();
+        new SearchClient();
     }
 
     /**
@@ -52,7 +54,7 @@ class ClientTest extends TestCase
      */
     public function testSearchEndWith401()
     {
-        new Client("invalid_format");
+        new SearchClient("invalid_format");
     }
 
     /**
@@ -63,7 +65,7 @@ class ClientTest extends TestCase
      */
     public function testSearchEndWith406()
     {
-        $client = new Client('sk_0000000000000000000000000000000000000000');
+        $client = new SearchClient('sk_0000000000000000000000000000000000000000');
         $obj = new \stdClass();
         $client->search($obj);
     }
@@ -80,11 +82,11 @@ class ClientTest extends TestCase
             new \GuzzleHttp\Psr7\Response(200, [], ""),
         ];
 
-        $client = new Client('sk_0000000000000000000000000000000000000000');
+        $client = new SearchClient('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
-        $req = new \Lookin\Request\ApiSearchRequest();
+        $req = new SearchRequest();
         $client->search($req);
     }
 
@@ -99,11 +101,11 @@ class ClientTest extends TestCase
         $mockresponse = [
             new \GuzzleHttp\Psr7\Response(400, [], '{"status":400,"message":"Please specify a search keyword."}'),
         ];
-        $client = new Client('sk_0000000000000000000000000000000000000000');
+        $client = new SearchClient('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
-        $req = new \Lookin\Request\ApiSearchRequest();
+        $req = new SearchRequest();
         $client->search($req);
     }
 
@@ -116,13 +118,13 @@ class ClientTest extends TestCase
         $mockresponse = [
             new \GuzzleHttp\Psr7\Response(302, [], '{"duration": 3,"total": 2,"size": 30,"total_pages": 1,"current_page": 1,"has_prev": false,"has_next": false,"start": 1,"end": 2,"hits": [{"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page1","score": 13.4268875}, {"language": "ja","title": "TEST","content": "テストページの内容","url": "http://example.com/path/to/page2","score": 13.4268875}]}'),
         ];
-        $client = new Client('sk_0000000000000000000000000000000000000000');
+        $client = new SearchClient('sk_0000000000000000000000000000000000000000');
 
         // モックを設定
         $client->mockResponses = $mockresponse;
-        $req = new \Lookin\Request\ApiSearchRequest();
+        $req = new SearchRequest();
 
         $res = $client->search($req);
-        $this->assertEquals('Lookin\Response\ApiSearchResponse', get_class($res));
+        $this->assertEquals('Lookin\Services\Search\SearchResponse', get_class($res));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lookin;
+namespace Lookin\Services\Search;
 
 /**
  * Lookin
@@ -15,9 +15,9 @@ namespace Lookin;
 use Lookin\Exception\HttpErrorException;
 use Lookin\Exception\InvalidRequestException;
 use Lookin\Exception\InvalidSecretKeyException;
-use Lookin\Response\ApiSearchResponse;
+use Lookin\Services\Search\SearchResponse;
 
-class Client
+class SearchClient
 {
 
     /**
@@ -75,12 +75,12 @@ class Client
     /**
      * search mehtods
      *
-     * @param  \Lookin\Request\ApiSearchRequest $request ApiSearchRequest instance
+     * @param  \Lookin\Services\Search\SearchRequest $request SearchRequest instance
      * @throws InvalidRequestException
      */
     public function search($request = null)
     {
-        if (get_class($request) !== 'Lookin\Request\ApiSearchRequest') {
+        if (get_class($request) !== 'Lookin\Services\Search\SearchRequest') {
             // instance check
             throw new InvalidRequestException('request must be an instance of \Lookin\Request\ApiSearchRequest');
         }
@@ -95,7 +95,7 @@ class Client
         }
 
         // create response instance
-        return new ApiSearchResponse((string) $response->getBody());
+        return new SearchResponse((string) $response->getBody());
     }
 
     /**
@@ -107,7 +107,7 @@ class Client
     private function __sendGET($url, $params = [])
     {
         if (getenv('ENV') === 'TEST') {
-            // when testing
+            // when testing (this ENV var is set in phpunit.xml)
             $mock = new \GuzzleHttp\Handler\MockHandler($this->mockResponses);
             $handler = \GuzzleHttp\HandlerStack::create($mock);
             $http = new \GuzzleHttp\Client(['handler' => $handler]);

@@ -3,7 +3,7 @@
 Lookin is a simple-site-search engine.  
 This is sdk for PHP.
 
-[![CircleCI](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php.svg?style=svg)](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php)
+[![CircleCI](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php/tree/master.svg?style=svg)](https://circleci.com/gh/tomohiroukawa/lookin-sdk-php/tree/master)
 
 # Requirements
 
@@ -24,16 +24,16 @@ require './vendor/autoload.php';
 
 ini_set("display_errors", "On");
 
-use Lookin\Client;
-use Lookin\Request\ApiSearchRequest;
+use Lookin\Services\Search\SearchClient;
+use Lookin\Services\Search\SearchRequest;
 
 try {
 
     // initiate client
-    $client = new Client("sk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    $client = new SearchClient("sk_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
     // build request
-    $req = new ApiSearchRequest([
+    $req = new SearchRequest([
         "q" => "keyword",
         "device" => "desktop", // or mobile
         "size" => 40, // optional
