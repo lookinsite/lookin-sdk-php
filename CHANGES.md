@@ -1,7 +1,8 @@
 # CHANGES
 
-
 ## Next
+
+## 0.2.0
 
 - Refactor: change directories for multiple services
 - Minor: update composer.json
