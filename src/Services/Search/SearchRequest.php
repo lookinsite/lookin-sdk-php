@@ -1,6 +1,6 @@
 <?php
 
-namespace Lookin\Request;
+namespace Lookin\Services\Search;
 
 /**
  * Lookin
@@ -23,7 +23,7 @@ use Lookin\Exception\MissingKeyException;
  * @property int $page
  * @property string $device
  */
-class ApiSearchRequest
+class SearchRequest
 {
 
     /**

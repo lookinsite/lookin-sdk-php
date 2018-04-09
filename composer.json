@@ -1,17 +1,23 @@
 {
     "name": "tomohiroukawa/lookin-sdk-php",
-    "description": "Lookin search SDK for PHP",
-    "type": "composer-plugin",
-    "license": "The MIT License",
+    "description": "Lookin client SDK for PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tomohiro Ukawa",
+            "homepage": "https://github.com/tomohiroukawa"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Lookin\\": "src/"
         }
     },
     "config": {
-      "preffered-install": "dist",
-      "sort-packages": true,
-      "optimize-autoloader": true,
+        "preffered-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
         "platform": {
             "php": "5.6"
         }
