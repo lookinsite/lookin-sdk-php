@@ -2,6 +2,10 @@
 
 ## Next
 
+## 0.3.0
+
+- Minor: change endpoint to production
+
 ## 0.2.0
 
 - Refactor: change directories for multiple services
