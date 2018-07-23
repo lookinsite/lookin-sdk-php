@@ -2,6 +2,8 @@
 
 ## Next
 
+- Minor: change package name in composer.json
+
 ## 0.3.0
 
 - Minor: change endpoint to production
