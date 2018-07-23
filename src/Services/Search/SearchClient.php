@@ -25,7 +25,7 @@ class SearchClient
      *
      * @var string
      */
-    private $endpoint = 'https://api.staging.lookin.site/';
+    private $endpoint = 'https://api.lookin.site/';
 
     /**
      * Request instance
