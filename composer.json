@@ -1,5 +1,5 @@
 {
-    "name": "tomohiroukawa/lookin-sdk-php",
+    "name": "lookinsite/lookin-sdk-php",
     "description": "Lookin client SDK for PHP",
     "type": "library",
     "license": "MIT",
