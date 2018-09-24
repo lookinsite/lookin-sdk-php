@@ -3,6 +3,9 @@
 ## Next
 
 - Bugfix: fix typo
+
+## 0.4.0
+
 - Minor: change package name in composer.json
 
 ## 0.3.0
