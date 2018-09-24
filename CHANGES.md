@@ -2,6 +2,8 @@
 
 ## Next
 
+## 0.4.1
+
 - Bugfix: fix typo
 
 ## 0.4.0
