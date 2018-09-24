@@ -12,7 +12,7 @@ PHP5.6+
 # Installation
 
 ```bash
-composer require lookin/lookin-sdk-php
+composer require lookinsite/lookin-sdk-php
 ```
 
 # Usage

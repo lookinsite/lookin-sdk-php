@@ -2,6 +2,7 @@
 
 ## Next
 
+- Bugfix: fix typo
 - Minor: change package name in composer.json
 
 ## 0.3.0
